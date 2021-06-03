@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -54,4 +55,9 @@ public class User {
 	@UpdateTimestamp
 	@Column(name="dt_updated_at")
 	private LocalDateTime updatedAt;
+	
+	@PreRemove
+	private void removeGroups() {
+	    roles.clear();
+	}
 }

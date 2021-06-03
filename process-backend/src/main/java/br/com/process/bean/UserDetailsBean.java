@@ -32,7 +32,6 @@ public class UserDetailsBean implements UserDetails {
 	private String password;
 
     @Getter 
-    @JsonIgnore
     private Collection<? extends GrantedAuthority> authorities;
         
 	@Override

@@ -61,7 +61,7 @@ public class UserDetailsServiceImpl implements  org.springframework.security.cor
 		String password = passwordEncoder.encode(bean.getPassword());
 		bean.setPassword(password);
 		
-		return save(bean.toUser());
+		return save(bean.toUser(), bean.getRole());
 	}
 	
 	public UserDetails update(CreateUserBean bean) {
@@ -71,22 +71,23 @@ public class UserDetailsServiceImpl implements  org.springframework.security.cor
 		User user = userRepo.findByLogin(bean.getUsername())
 				        .orElseThrow(() -> new NotFoundException("User not found"));
 		
+		user.setName(bean.getName());
 		user.setEmail(bean.getEmail());
 		user.setPassword(passwordEncoder.encode(bean.getPassword()));
 		user.setLogin(bean.getUsername());
 		
-		Role role = roleRepo.findByDescription(bean.getRole())
+		return save(user, bean.getRole());
+	}
+	
+	private UserDetails save(User bean, String roleStr) {
+		Role role = roleRepo.findByDescription(roleStr)
 				        .orElseThrow(() -> new NotFoundException("Role not found"));
 		
 		var roles = new ArrayList<Role>();
 		roles.add(role);
 		
-		user.setRoles(roles);
+		bean.setRoles(roles);
 		
-		return save(user);
-	}
-	
-	private UserDetails save(User bean) {
 		User user = userRepo.save(bean);
 		return UserDetailsBean.build(user);
 	}
