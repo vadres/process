@@ -43,6 +43,13 @@ public class UserDetailsServiceImpl implements  org.springframework.security.cor
 				   .collect(Collectors.toList());
 	}
 	
+	public List<UserDetailsBean> listFinalizadores() {
+		return userRepo.findFinalizadores()
+				   .stream()
+				   .map(u -> UserDetailsBean.build(u))
+				   .collect(Collectors.toList());
+	}
+	
 	public UserDetailsBean get(Integer id) {
 		User user = userRepo.findById(id).orElseThrow(() -> new NotFoundException("User not found"));
 		
