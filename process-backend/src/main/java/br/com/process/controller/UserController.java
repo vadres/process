@@ -8,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.process.bean.UserDetailsBean;
@@ -22,9 +23,10 @@ public class UserController {
 	
 	@GetMapping
 	@PreAuthorize("hasAuthority('ADMIN')")
-	public ResponseEntity<?> allUsers() {
-		List<UserDetailsBean> users = service.list();
+	public ResponseEntity<?> searchUsers(@RequestParam(name = "id", required = false) Integer id) {
+		if (id != null) 
+			return ResponseEntity.ok(service.get(id));
 		
-		return ResponseEntity.ok(users);
+		return ResponseEntity.ok(service.list());
 	}
 }

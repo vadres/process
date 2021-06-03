@@ -10,4 +10,5 @@ import br.com.process.model.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
 	Optional<User> findByLogin(String login);
+	Optional<User> findById(Integer id);
 }
