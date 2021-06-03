@@ -39,8 +39,6 @@ public class AuthFilter extends OncePerRequestFilter {
 				authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
 				SecurityContextHolder.getContext().setAuthentication(authentication);
-
-				SecurityContextHolder.getContext().setAuthentication(null);
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
