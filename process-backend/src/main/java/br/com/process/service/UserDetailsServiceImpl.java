@@ -14,7 +14,7 @@ import br.com.process.model.User;
 import br.com.process.repository.UserRepository;
 
 @Service
-public class UserService implements  org.springframework.security.core.userdetails.UserDetailsService {
+public class UserDetailsServiceImpl implements  org.springframework.security.core.userdetails.UserDetailsService {
 	@Autowired
     UserRepository repo;
     
@@ -28,7 +28,7 @@ public class UserService implements  org.springframework.security.core.userdetai
 		return UserDetailsBean.build(usuario);
 	}	
 	
-	public List<UserDetails> list() {
+	public List<UserDetailsBean> list() {
 		return repo.findAll()
 				   .stream()
 				   .map(u -> UserDetailsBean.build(u))
