@@ -15,12 +15,12 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import br.com.process.service.UserService;
+import br.com.process.service.UserDetailsServiceImpl;
 
 
 public class AuthFilter extends OncePerRequestFilter {
 	@Autowired
-	private UserService userService;
+	private UserDetailsServiceImpl userService;
 	
 	@Autowired
 	private JwtGen jwtGen;
