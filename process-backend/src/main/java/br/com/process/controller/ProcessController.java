@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.process.bean.CreateProcessBean;
 import br.com.process.bean.CreateUserBean;
+import br.com.process.service.ProcessService;
 import br.com.process.service.UserDetailsServiceImpl;
 
 @RestController
@@ -24,28 +26,16 @@ import br.com.process.service.UserDetailsServiceImpl;
 @PreAuthorize("hasAuthority('ADMIN')")
 public class ProcessController {
 	@Autowired
-	private UserDetailsServiceImpl service;
+	private ProcessService service;
 
 	@GetMapping
-	public ResponseEntity<?> searchUsers(@RequestParam(name = "id", required = false) Integer id) {
-		if (id != null)
-			return ResponseEntity.ok(service.get(id));
-
+	public ResponseEntity<?> searchProcess() {
 		return ResponseEntity.ok(service.list());
 	}
 
 	@PostMapping
-	public ResponseEntity<?> createUser(@Valid @RequestBody CreateUserBean bean) {
-		return ResponseEntity.ok(service.create(bean));
-	}
-
-	@PutMapping
-	public ResponseEntity<?> updateUser(@Valid @RequestBody CreateUserBean bean) {
-		return ResponseEntity.ok(service.update(bean));
-	}
-
-	@DeleteMapping
-	public ResponseEntity<?> removeUser(@RequestParam(name = "id", required = true) Integer id) {
-		return ResponseEntity.ok(service.remove(id));
+	public ResponseEntity<?> createProcess(@Valid @RequestBody CreateProcessBean bean) {
+		service.create(bean);
+		return ResponseEntity.ok().build();
 	}
 }

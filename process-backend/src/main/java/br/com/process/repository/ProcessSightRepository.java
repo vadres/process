@@ -11,8 +11,9 @@ import br.com.process.model.ProcessSight;
 
 @Repository
 public interface ProcessSightRepository extends JpaRepository<ProcessSight, Integer> {
-	@Query(value = "select ps from ProcessSight ps join fetch ps.user u join fetch ps.process p where u.id = $1 and status = 1 ")
+	@Query(value = "select ps from ProcessSight ps join fetch ps.user u where u.id = $1 and status = 1 ")
 	public List<ProcessSight> findOpenSight(Integer idUser);
 	
 	Optional<ProcessSight> findById(Integer id);
+
 }

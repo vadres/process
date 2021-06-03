@@ -19,6 +19,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 
 @Data
@@ -39,19 +41,23 @@ public class User {
 	@Column(name = "vl_email")	
     private String email;
 	
+	@JsonIgnore
 	@Column(name = "vl_password")	
     private String password;
 	
+	@JsonIgnore
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name="tb_user_role",
          joinColumns={@JoinColumn(name="id_user")},
          inverseJoinColumns={@JoinColumn(name="id_role")})
 	private List<Role> roles;
 	
+	@JsonIgnore
 	@CreationTimestamp
 	@Column(name="dt_created_at", updatable = false)
 	private LocalDateTime createdAt;
 	
+	@JsonIgnore
 	@UpdateTimestamp
 	@Column(name="dt_updated_at")
 	private LocalDateTime updatedAt;
