@@ -41,7 +41,7 @@ public class UserController {
 	
 	@PutMapping
 	public ResponseEntity<?> updateUser(@Valid @RequestBody CreateUserBean bean) {
-		return ResponseEntity.ok(service.save(bean));
+		return ResponseEntity.ok(service.update(bean));
 	}
 	
 	@DeleteMapping
