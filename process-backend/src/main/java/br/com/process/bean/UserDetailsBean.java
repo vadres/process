@@ -7,8 +7,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import br.com.process.model.User;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+@AllArgsConstructor
 public class UserDetailsBean implements UserDetails {
     private static final long serialVersionUID = 1L;
 
@@ -19,10 +22,10 @@ public class UserDetailsBean implements UserDetails {
     private String username;
 
     @Getter
-    private String email;
-
-    @Getter
     private String name;
+    
+    @Getter
+    private String email;
 
     @Getter
     @JsonIgnore
@@ -31,7 +34,7 @@ public class UserDetailsBean implements UserDetails {
     @Getter 
     @JsonIgnore
     private Collection<? extends GrantedAuthority> authorities;
-    
+        
 	@Override
 	public boolean isAccountNonExpired() {
 		return false;
@@ -50,6 +53,17 @@ public class UserDetailsBean implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return false;
+	}
+	
+	public static UserDetailsBean build(User user) {
+		return new UserDetailsBean(
+			Long.valueOf(user.getId()),
+			user.getLogin(),
+			user.getName(),
+			user.getEmail(),
+			user.getPassword(),
+			user.getRoles()
+		);
 	}
 
 }

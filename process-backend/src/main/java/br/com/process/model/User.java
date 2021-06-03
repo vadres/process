@@ -35,6 +35,9 @@ public class User {
 	@Column(name = "vl_email")	
     private String email;
 	
+	@Column(name = "vl_password")	
+    private String password;
+	
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name="tb_user_role",
          joinColumns={@JoinColumn(name="id_user")},
