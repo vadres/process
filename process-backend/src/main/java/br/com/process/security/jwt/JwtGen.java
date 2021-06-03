@@ -19,7 +19,7 @@ public class JwtGen {
     	Algorithm algotithm = Algorithm.HMAC512("SECRET");
     	
     	return JWT.create()
-    			  .withClaim("usuario", userDetails.getUsername())
+    			  .withClaim("user", userDetails.getUsername())
     			  .withClaim("id", userDetails.getId())
     			  .sign(algotithm);
     }
@@ -46,7 +46,7 @@ public class JwtGen {
 		    	JWTVerifier verifier = JWT.require(algotithm).build();
 		    	
 		    	DecodedJWT decoded = verifier.verify(token);
-		    	return decoded.getClaims().get("usuario").asString();
+		    	return decoded.getClaims().get("user").asString();
 	    	} catch (Exception e) {
 				return null;
 			}

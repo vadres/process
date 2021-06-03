@@ -7,12 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
+import org.springframework.stereotype.Service;
 
 import br.com.process.bean.UserDetailsBean;
 import br.com.process.model.User;
 import br.com.process.repository.UserRepository;
 
+@Service
 public class UserService implements  org.springframework.security.core.userdetails.UserDetailsService {
 	@Autowired
     UserRepository repo;
