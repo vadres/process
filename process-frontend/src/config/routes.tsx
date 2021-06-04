@@ -1,11 +1,16 @@
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Login from "../pages/login";
+import Users from "../pages/users";
 
 const Routes : React.FC = () => {
   return (
-    <BrowserRouter>
-      <Route path="/" component={Login} />
-    </BrowserRouter>
+    <Router>
+      <Switch>
+        <Route exact path="/" component={Login} />
+        <Route exact path="/users" component={Users} />
+      </Switch>
+     
+    </Router>
   );
 }
 

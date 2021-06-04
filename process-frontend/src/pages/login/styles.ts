@@ -7,8 +7,8 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
 
-  background: rgb(79,77,124);
-  background: linear-gradient(90deg, rgba(79,77,124,1) 0%, rgba(135,135,208,1) 35%, rgba(0,212,255,1) 100%);
+  background: rgb(0,21,41);
+  background: linear-gradient(90deg, rgba(0,21,41,1) 0%, rgba(4,46,87,1) 35%, rgba(4,37,69,1) 100%);
 `;
 
 export const FormContent = styled.div`

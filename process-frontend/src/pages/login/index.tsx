@@ -1,20 +1,14 @@
 import React from 'react';
-import { Layout, Form, Input, Button } from 'antd';
+import { useHistory } from 'react-router-dom';
+import { Form, Input, Button } from 'antd';
 import { FormInstance } from 'antd/lib/form';
-import "antd/dist/antd.css";
 
 import { Container, FormContent, Title } from './styles';
 
-const { Content } = Layout;
-
 function Login() {
+  const history = useHistory();
   const formRef = React.createRef<FormInstance>();
 
-  const layout = {
-    labelCol: { span: 8 },
-    wrapperCol: { span: 16 },
-  };
-  
   const tailLayout = {
     wrapperCol: { offset: 8, span: 16 },
   };
@@ -42,7 +36,7 @@ function Login() {
 
         
           <Form.Item {...tailLayout}>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" onClick={() => { history.push("/users") }}>
               Entrar
             </Button>
           </Form.Item>
