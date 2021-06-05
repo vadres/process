@@ -7,9 +7,9 @@ Aplicação de gerenciamento de processos.
 O módulo de backend utiliza o banco de dados H2 e está configurado para ser utilizado na memória, assim a aplicação não necessita de qualquer banco de dados extra, além disso foram usadas migrations com flyway para criar a estrutura e inserir algumas informações. O context-path sera /process e a porta da aplicação será a 8080.
 
 ### Frontend
-O módulo de frontend foi desenvolvido usando a lib AntDesign, essa lib contém diversos componentes prontos que facilitam o processo de desenvolvimento. A porta da aplicação será a 3000. Existem usuários cadastrados para realizar login, mas como verão adiante na seção [Checklist] (#checklist-de-tarefas-cumpridas) apenas as rotas de admin funcionam. 
-> login:  admin
-> senha: 12345678
+O módulo de frontend foi desenvolvido usando a lib AntDesign, essa lib contém diversos componentes prontos que facilitam o processo de desenvolvimento. A porta da aplicação será a 3000. Existem usuários cadastrados para realizar login, mas como verão adiante na seção [Checklist](#checklist-de-tarefas-cumpridas) apenas as rotas de admin funcionam. 
+- login:  admin
+- senha: 12345678
 
 Rodar os seguintes comandos:
 
