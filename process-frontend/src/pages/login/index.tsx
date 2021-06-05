@@ -1,23 +1,41 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Redirect } from 'react-router-dom';
 import { Form, Input, Button } from 'antd';
 import { FormInstance } from 'antd/lib/form';
 
 import { Container, FormContent, Title } from './styles';
+import { AppContext } from '../../context/AppContext';
 
-function Login() {
-  const history = useHistory();
+const Login: React.FC = () => {
+  const { checkUser, loadUser } = useContext(AppContext);
+  
+  const [ form ] = Form.useForm();
   const formRef = React.createRef<FormInstance>();
-
+   
   const tailLayout = {
     wrapperCol: { offset: 8, span: 16 },
   };
+  
+  const login = () => {
+    const l: string = form.getFieldValue("login"); 
+    const p: string = form.getFieldValue("password");
+    
+    if (l && l.trim() !== "" &&
+        p && p.trim() !== "") 
+    {
+      loadUser(
+        form.getFieldValue("login"), 
+        form.getFieldValue("password")
+      );
+    }
+  }
 
   return (
+    checkUser()? <Redirect to="/users" /> : ( 
     <Container>
       <FormContent>
         <Title>Entrar</Title>
-        <Form layout="vertical" ref={formRef} name="control-ref">
+        <Form form={form} layout="vertical" ref={formRef} name="control-ref">
           <Form.Item
             label="Login"
             name="login"
@@ -36,7 +54,7 @@ function Login() {
 
         
           <Form.Item {...tailLayout}>
-            <Button type="primary" htmlType="submit" onClick={() => { history.push("/users") }}>
+            <Button type="primary" htmlType="submit" onClick={() => login()}>
               Entrar
             </Button>
           </Form.Item>
@@ -44,6 +62,7 @@ function Login() {
 
       </FormContent>
     </Container>
+    )
   );
 }
 

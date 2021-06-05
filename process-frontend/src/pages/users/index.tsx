@@ -1,106 +1,98 @@
 import { Layout, Menu, Breadcrumb, Table, Tag, Space } from 'antd';
+import { useContext, useEffect, useState } from 'react';
+import { Redirect } from 'react-router';
+import Authority from '../../@types/Authority';
+import { AppContext } from '../../context/AppContext';
+import { getAllUsers } from '../../services/userService';
 
 import "./style.css";
 
 const { Header, Content, Footer } = Layout;
 
 function Users() {
+  const { checkUser, removeUser, user } = useContext(AppContext);
+
+  const [ usersData, setUsersData ] = useState([]);
   
+  const fetchUsers = () => {
+    (async () => {
+      try {
+        const resp = await getAllUsers(user);
+        setUsersData(resp.data);
+        console.log(resp);
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+  }
+
+  useEffect(() => {
+    fetchUsers();
+  }, [ ]);
+
   const columns = [
     {
+      title: '#',
+      dataIndex: 'id',
+      key: 'id',
+    },
+    {
       title: 'Nome',
-      dataIndex: 'nome',
-      key: 'nome',
+      dataIndex: 'name',
+      key: 'name',
       render: (text:string) => <a>{text}</a>,
     },
     {
       title: 'Login',
-      dataIndex: 'login',
-      key: 'login',
-    },
-    {
-      title: 'Email',
-      dataIndex: 'email',
-      key: 'email',
-    },
+      dataIndex: 'username',
+      key: 'username',
+    },   
     {
       title: 'Permissões',
-      key: 'roles',
-      dataIndex: 'roles',
-      render: (roles: any) => (
+      key: 'authorities',
+      dataIndex: 'authorities',
+      render: (roles: Authority[]) => (
         <>
-          {roles.map((tag: string) => {
-            let color = tag.length > 5 ? 'geekblue' : 'green';
-            if (tag === 'loser') {
+          {roles.map((role: Authority) => {
+            let color = role.authority === "ADMIN" ? 'geekblue' : 'green';
+            if (role.authority === "FINALIZADOR") {
               color = 'volcano';
             }
             return (
-              <Tag color={color} key={tag}>
-                {tag.toUpperCase()}
+              <Tag color={color} key={role.id}>
+                {role.authority.toUpperCase()}
               </Tag>
             );
           })}
         </>
       ),
-    },
-    {
-      title: 'Action',
-      key: 'action',
-      render: (text:string, record:any) => (
-        <Space size="middle">
-          <a>Invite {record.nome}</a>
-          <a>Delete</a>
-        </Space>
-      ),
-    },
+    }
   ];
   
-  const data = [
-    {
-      key: '1',
-      nome: 'John Brown',
-      email: 32,
-      login: 'New York No. 1 Lake Park',
-      roles: ['nice', 'developer'],
-    },
-    {
-      key: '2',
-      nome: 'Jim Green',
-      email: 42,
-      login: 'London No. 1 Lake Park',
-      roles: ['loser'],
-    },
-    {
-      key: '3',
-      nome: 'Joe Black',
-      email: 32,
-      login: 'Sidney No. 1 Lake Park',
-      roles: ['cool', 'teacher'],
-    },
-  ];
-
   return (
-    <>
-    <Layout className="layout">
-    <Header>
-      <div className="logo" />
-      <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
-        <Menu.Item key="1">Usuários</Menu.Item>
-      </Menu>
-    </Header>
-    <Content style={{ padding: '0 50px' }}>
-      <Breadcrumb style={{ margin: '16px 0' }}>
-        <Breadcrumb.Item>Home</Breadcrumb.Item>
-        <Breadcrumb.Item>List</Breadcrumb.Item>
-        <Breadcrumb.Item>Usuários</Breadcrumb.Item>
-      </Breadcrumb>
-      <div className="site-layout-content">
-        <Table columns={columns} dataSource={data} />,
-      </div>
-    </Content>
-    <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
-  </Layout>
-  </>
+    !checkUser()? <Redirect to="/" />: (
+      <>
+        <Layout className="layout">
+          <Header>
+            <div className="logo" />
+            <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
+              <Menu.Item onClick={() => removeUser()} style={{ float: "right" }} key="1">Sair</Menu.Item>
+            </Menu>
+          </Header>
+          <Content style={{ padding: '0 50px' }}>
+            <Breadcrumb style={{ margin: '16px 0' }}>
+              <Breadcrumb.Item>Home</Breadcrumb.Item>
+              <Breadcrumb.Item>List</Breadcrumb.Item>
+              <Breadcrumb.Item>Usuários</Breadcrumb.Item>
+            </Breadcrumb>
+            <div className="site-layout-content">
+              <Table columns={columns} dataSource={usersData} />
+            </div>
+          </Content>
+          <Footer style={{ textAlign: 'center' }}> ©2021 </Footer>
+        </Layout>
+      </>
+    )
   );
 }
 
