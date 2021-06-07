@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.process.bean.CreateProcessSightBean;
+import br.com.process.bean.CreateResponseSightBean;
 import br.com.process.exception.BadRequestException;
 import br.com.process.exception.NotFoundException;
+import br.com.process.model.Process;
 import br.com.process.model.ProcessSight;
 import br.com.process.model.User;
 import br.com.process.model.enums.ProcessStatusEnum;
@@ -42,5 +44,28 @@ public class ProcessSightService {
 		processSight.setStatus(ProcessStatusEnum.PENDENTE.ordinal());
 		
 		repo.save(processSight);
+	}
+	
+	public void createResponse(CreateResponseSightBean bean) {
+		Process process = processRepo.findByIdAndUser(bean.getProcess(), bean.getUser())
+		                             .orElseThrow(() -> new NotFoundException("Process not found"));
+		
+		User user = userRepo.findById(bean.getUser())
+				        .orElseThrow(() -> new NotFoundException("User not found"));
+		
+		user.getRoles().stream().forEach(r -> {
+			if (!r.getDescription().equals("FINALIZADOR"))
+				throw new BadRequestException("User does not have the role 'FINALIZADOR'");
+		});
+		
+		
+		process.getSights().forEach(s -> { 
+			if (s.getUser().getId().equals(user.getId())) {
+				s.setDescription(bean.getDescription());
+				s.setStatus(ProcessStatusEnum.RESPONDIDO.ordinal());
+			}
+		});		
+
+		processRepo.save(process);
 	}
 }
