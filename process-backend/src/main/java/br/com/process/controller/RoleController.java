@@ -12,7 +12,7 @@ import br.com.process.repository.RoleRepository;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping("/role")
+@RequestMapping("/api/role")
 public class RoleController {
     @Autowired
     private RoleRepository repo;

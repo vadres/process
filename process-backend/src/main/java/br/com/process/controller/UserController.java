@@ -20,7 +20,7 @@ import br.com.process.service.UserDetailsServiceImpl;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 @PreAuthorize("hasAuthority('ADMIN')")
 public class UserController {
     @Autowired

@@ -17,7 +17,7 @@ import br.com.process.service.UserDetailsServiceImpl;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping("/process-sight")
+@RequestMapping("/api/process-sight")
 public class ProcessSightController {
     @Autowired
     private UserDetailsServiceImpl userService;
