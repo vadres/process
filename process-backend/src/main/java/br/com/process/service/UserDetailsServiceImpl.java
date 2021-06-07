@@ -43,7 +43,7 @@ public class UserDetailsServiceImpl implements  org.springframework.security.cor
 				   .collect(Collectors.toList());
 	}
 	
-	public List<UserDetailsBean> listFinalizadores() {
+	public List<UserDetailsBean> listFinishers() {
 		return userRepo.findFinalizadores()
 				   .stream()
 				   .map(u -> UserDetailsBean.build(u))

@@ -17,7 +17,7 @@ import br.com.process.service.UserDetailsServiceImpl;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping("/api/process-sight")
+@RequestMapping("/api/sight")
 public class ProcessSightController {
     @Autowired
     private UserDetailsServiceImpl userService;
@@ -25,9 +25,9 @@ public class ProcessSightController {
     @Autowired
     private ProcessSightService psService;
 	
-	@GetMapping("/finalizadores")
+	@GetMapping("/finishers")
 	public ResponseEntity<?> searchSights() {
-		return ResponseEntity.ok(userService.listFinalizadores());
+		return ResponseEntity.ok(userService.listFinishers());
 	}
 	
 	@PostMapping

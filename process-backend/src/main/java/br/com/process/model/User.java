@@ -46,7 +46,7 @@ public class User {
     private String password;
 	
 	@JsonIgnore
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	@JoinTable(name="tb_user_role",
          joinColumns={@JoinColumn(name="id_user")},
          inverseJoinColumns={@JoinColumn(name="id_role")})

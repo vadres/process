@@ -21,7 +21,7 @@ import br.com.process.security.jwt.JwtGen;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping(path = "/auth")
+@RequestMapping(path = "/api/auth")
 public class AuthController {
 	@Autowired
 	AuthenticationManager authenticationManager;
