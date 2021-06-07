@@ -12,9 +12,15 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class _ExceptionHandler extends ResponseEntityExceptionHandler {
 	
 	@ExceptionHandler(value= { NotFoundException.class })
-	public ResponseEntity<Object> handleConflict(RuntimeException e) {
+	public ResponseEntity<Object> handleNotFound(RuntimeException e) {
 
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+	}
+	
+	@ExceptionHandler(value= { BadRequestException.class })
+	public ResponseEntity<Object> handleBadRequest(RuntimeException e) {
+
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 	}
 	
 }

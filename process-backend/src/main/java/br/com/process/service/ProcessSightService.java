@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.process.bean.CreateProcessSightBean;
+import br.com.process.exception.BadRequestException;
 import br.com.process.exception.NotFoundException;
 import br.com.process.model.ProcessSight;
 import br.com.process.model.User;
@@ -29,6 +30,11 @@ public class ProcessSightService {
 		
 		User user = userRepo.findById(bean.getUser())
 				        .orElseThrow(() -> new NotFoundException("User not found"));
+		
+		user.getRoles().stream().forEach(r -> {
+			if (!r.getDescription().equals("FINALIZADOR"))
+				throw new BadRequestException("User does not have the role 'FINALIZADOR'");
+		});
 		
 		var processSight = new ProcessSight();
 		processSight.setProcess(bean.getProcess());
