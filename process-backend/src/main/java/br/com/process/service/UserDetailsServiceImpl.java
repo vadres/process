@@ -12,11 +12,13 @@ import org.springframework.stereotype.Service;
 
 import br.com.process.bean.CreateUserBean;
 import br.com.process.bean.UserDetailsBean;
+import br.com.process.exception.BadRequestException;
 import br.com.process.exception.NotFoundException;
 import br.com.process.model.Role;
 import br.com.process.model.User;
 import br.com.process.repository.RoleRepository;
 import br.com.process.repository.UserRepository;
+import br.com.process.security.jwt.JwtGen;
 
 @Service
 public class UserDetailsServiceImpl implements  org.springframework.security.core.userdetails.UserDetailsService {
@@ -29,6 +31,9 @@ public class UserDetailsServiceImpl implements  org.springframework.security.cor
 	@Autowired
 	PasswordEncoder passwordEncoder;
 	
+	@Autowired
+	JwtGen jwtGen;
+	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userRepo.findByLogin(username).orElseThrow();
@@ -36,10 +41,13 @@ public class UserDetailsServiceImpl implements  org.springframework.security.cor
 		return UserDetailsBean.build(user);
 	}	
 	
-	public List<UserDetailsBean> list() {
+	public List<UserDetailsBean> list(String token) {
+		String username = jwtGen.getUsername(token);
+
 		return userRepo.findAll()
 				   .stream()
 				   .map(u -> UserDetailsBean.build(u))
+				   .filter(u -> !u.getUsername().equals(username))
 				   .collect(Collectors.toList());
 	}
 	
@@ -67,6 +75,10 @@ public class UserDetailsServiceImpl implements  org.springframework.security.cor
 	public UserDetails create(CreateUserBean bean) {
 		String password = passwordEncoder.encode(bean.getPassword());
 		bean.setPassword(password);
+		
+		userRepo.findByLogin(bean.getUsername()).ifPresent(u -> {
+			throw new BadRequestException("Login has been exists");
+		});
 		
 		return save(bean.toUser(), bean.getRole());
 	}

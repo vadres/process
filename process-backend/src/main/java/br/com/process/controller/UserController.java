@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,11 +28,11 @@ public class UserController {
     private UserDetailsServiceImpl service;
 	
 	@GetMapping
-	public ResponseEntity<?> searchUsers(@RequestParam(name = "id", required = false) Integer id) {
+	public ResponseEntity<?> searchUsers(@RequestHeader(value="Authorization") String authorization, @RequestParam(name = "id", required = false) Integer id) {
 		if (id != null) 
 			return ResponseEntity.ok(service.get(id));
 		
-		return ResponseEntity.ok(service.list());
+		return ResponseEntity.ok(service.list(authorization.split(" ")[1]));
 	}
 	
 	@PostMapping
