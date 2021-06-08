@@ -18,14 +18,14 @@ const App: React.FC = () => {
     }
   }, [ user, setUser, authenticate ]);
 
-  const removeUser = useCallback(async() => {
+  const unsetUser = useCallback(async() => {
     setUser(appContextDefault.user);
   }, [ user, setUser ]);
   
   const value: AppContextType = {
     user,
     loadUser,
-    removeUser,
+    unsetUser,
     checkUser: () => (user.token !== ""),
   }
 

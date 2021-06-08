@@ -31,7 +31,6 @@ const Login: React.FC = () => {
   }
 
   if (checkUser()) {
-    console.log(user.userDetails.authorities);
     switch(user.userDetails.authorities[0].description) {
       case 'ADMIN':
         return <Redirect to="/users" />

@@ -1,16 +1,9 @@
-interface Authority {
-  id: number
-  description: string
-  authority: string
-}
+import Authority from "./Authority";
 
 export default interface User {
-  token: string,
-  userDetails: {
-    id: number
-    username: string
-    name: string    
-    email: string
-    authorities: Authority[]
-  }
+  id: number
+  username: string
+  name: string    
+  email: string
+  authorities: Authority[]
 }

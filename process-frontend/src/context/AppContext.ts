@@ -1,10 +1,10 @@
 import { createContext } from "react";
-import User from "../@types/User";
+import AuthUser from "../@types/AuthUser";
 
 export interface AppContextType {
-  user: User,
+  user: AuthUser,
   loadUser: (login: string, password: string) => void,
-  removeUser: () => void,
+  unsetUser: () => void,
   checkUser: () => boolean
 } 
 
@@ -21,7 +21,7 @@ export const appContextDefault: AppContextType = {
   },
   loadUser: () => null,
   checkUser: () => false,
-  removeUser: () => null
+  unsetUser: () => null
 }
 
 export const AppContext = createContext<AppContextType>(appContextDefault);

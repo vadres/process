@@ -12,7 +12,7 @@ import TableStruct from './components/TableStruct';
 const { Header, Content, Footer } = Layout;
 
 function Users() {
-  const { checkUser, removeUser, user } = useContext(AppContext);
+  const { checkUser, unsetUser, user } = useContext(AppContext);
 
   const [ usersData, setUsersData ] = useState([]);
   
@@ -37,7 +37,7 @@ function Users() {
         <Layout className="layout">
           <Header>
             <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
-              <Menu.Item onClick={() => removeUser()} style={{ float: "right" }} key="1">Sair</Menu.Item>
+              <Menu.Item onClick={() => unsetUser()} style={{ float: "right" }} key="1">Sair</Menu.Item>
             </Menu>
           </Header>
           <StyledContent style={{ padding: '0 50px' }}>
@@ -47,7 +47,9 @@ function Users() {
               <Breadcrumb.Item>Usuários</Breadcrumb.Item>
             </Breadcrumb>
             <Div>
-              <Table rowKey="id" columns={TableStruct} dataSource={usersData} />
+              <Table rowKey="id" columns={TableStruct({
+                delete: 
+              })} dataSource={usersData} />
             </Div>
           </StyledContent>
           <Footer style={{ textAlign: 'center' }}> ©2021 </Footer>
