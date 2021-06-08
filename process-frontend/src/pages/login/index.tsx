@@ -7,7 +7,7 @@ import { Container, FormContent, Title } from './styles';
 import { AppContext } from '../../context/AppContext';
 
 const Login: React.FC = () => {
-  const { checkUser, loadUser } = useContext(AppContext);
+  const { user, checkUser, loadUser } = useContext(AppContext);
   
   const [ form ] = Form.useForm();
   const formRef = React.createRef<FormInstance>();
@@ -30,8 +30,21 @@ const Login: React.FC = () => {
     }
   }
 
+  if (checkUser()) {
+    console.log(user.userDetails.authorities);
+    switch(user.userDetails.authorities[0].description) {
+      case 'ADMIN':
+        return <Redirect to="/users" />
+      case 'TRIADOR':
+        return <Redirect to="/users" />
+      case 'FINALIZADOR':
+        return <Redirect to="/users" />
+      default:
+        return <Redirect to="/" />
+    }
+  }
+
   return (
-    checkUser()? <Redirect to="/users" /> : ( 
     <Container>
       <FormContent>
         <Title>Entrar</Title>
@@ -62,7 +75,6 @@ const Login: React.FC = () => {
 
       </FormContent>
     </Container>
-    )
   );
 }
 

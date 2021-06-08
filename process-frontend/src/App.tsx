@@ -2,7 +2,7 @@ import "antd/dist/antd.css";
 import React, { Component, useCallback, useState } from "react";
 import { AppContext, appContextDefault, AppContextType } from "./context/AppContext";
 
-import GlobalStyle from "./config/globalStyles";
+import GlobalStyle from "./common/globalStyles";
 import Routes from "./config/routes";
 import { authenticate } from "./services/authService";
 
