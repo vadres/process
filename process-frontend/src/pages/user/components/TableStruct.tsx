@@ -6,7 +6,7 @@ import {
 import Authority from "../../../@types/Authority";
 
 interface TableStructProps {
-  delete: () => void
+  delete: (record: any) => void
   edit: () => void
 }
 
@@ -53,7 +53,9 @@ const TableStruct = (props: TableStructProps) => {
       key: 'actions',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <CloseOutlined />
+          <a onClick={() => props.delete(record)}>
+            <CloseOutlined />
+          </a>
         </Space>
       )
     }

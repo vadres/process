@@ -33,11 +33,11 @@ const Login: React.FC = () => {
   if (checkUser()) {
     switch(user.userDetails.authorities[0].description) {
       case 'ADMIN':
-        return <Redirect to="/users" />
+        return <Redirect to="/user" />
       case 'TRIADOR':
-        return <Redirect to="/users" />
+        return <Redirect to="/user" />
       case 'FINALIZADOR':
-        return <Redirect to="/users" />
+        return <Redirect to="/user" />
       default:
         return <Redirect to="/" />
     }
