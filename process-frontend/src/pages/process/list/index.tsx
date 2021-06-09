@@ -58,7 +58,8 @@ function ProcessPage() {
               </Space>
 
               <Table rowKey="id" columns={TableStruct({
-                edit: async (record: Process) => { handleEditProcess(record.id) }
+                edit: async (record: Process) => { handleEditProcess(record.id) },
+                addUserSight: async (record: Process) => {}
               })} dataSource={processData} />
             </Div>
           </StyledContent>

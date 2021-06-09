@@ -1,10 +1,11 @@
-import { Button, Space } from "antd";
+import { Button, Space, Tooltip } from "antd";
 import {
-  EditOutlined
+  EditOutlined, SnippetsOutlined
 } from '@ant-design/icons';
 
 interface TableStructProps {
-  edit: (record: any) => void
+  edit: (record: any) => void,
+  addUserSight: (record: any) => void
 }
 
 const TableStruct = (props: TableStructProps) => {
@@ -26,9 +27,17 @@ const TableStruct = (props: TableStructProps) => {
       key: 'actions',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button type="link" onClick={() => props.edit(record)}>
-            <EditOutlined />
-          </Button>
+          <Tooltip title="Editar Processo">
+            <Button type="link" onClick={() => props.edit(record)}>
+              <EditOutlined />
+            </Button>
+          </Tooltip>
+
+          <Tooltip title="Adicionar usuário para responser">
+            <Button type="link" onClick={() => props.edit(record)}>
+              <SnippetsOutlined /> 
+            </Button>
+          </Tooltip>
         </Space>
       )
     }

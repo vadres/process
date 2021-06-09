@@ -1,4 +1,4 @@
-import { Button, Space, Tag } from "antd";
+import { Button, Space, Tag, Tooltip } from "antd";
 import {
   CloseOutlined, EditOutlined
 } from '@ant-design/icons';
@@ -53,13 +53,17 @@ const TableStruct = (props: TableStructProps) => {
       key: 'actions',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <Button type="link" onClick={() => props.delete(record)}>
-            <CloseOutlined />
-          </Button>
-
-          <Button type="link" onClick={() => props.edit(record)}>
-            <EditOutlined />
-          </Button>
+          <Tooltip title="Remover usuário">
+            <Button type="link" onClick={() => props.delete(record)}>
+              <CloseOutlined />
+            </Button>
+          </Tooltip>
+          
+          <Tooltip title="Editar usuário">
+            <Button type="link" onClick={() => props.edit(record)}>
+              <EditOutlined />
+            </Button>
+          </Tooltip>
         </Space>
       )
     }
