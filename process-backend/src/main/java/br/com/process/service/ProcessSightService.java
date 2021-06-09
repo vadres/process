@@ -27,8 +27,14 @@ public class ProcessSightService {
     private UserRepository userRepo;
    
 	public void create(CreateProcessSightBean bean) {
-		processRepo.findById(bean.getProcess())
-		           .orElseThrow(() -> new NotFoundException("Process not found"));
+		Process process = processRepo.findById(bean.getProcess())
+		           					 .orElseThrow(() -> new NotFoundException("Process not found"));
+		
+		process.getSights().forEach(s -> {
+			if (s.getUser().getId().equals(bean.getUser())) {
+				throw new BadRequestException("User already added");
+			}
+		});		
 		
 		User user = userRepo.findById(bean.getUser())
 				        .orElseThrow(() -> new NotFoundException("User not found"));

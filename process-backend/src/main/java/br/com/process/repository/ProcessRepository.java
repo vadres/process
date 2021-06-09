@@ -18,6 +18,6 @@ public interface ProcessRepository extends JpaRepository<Process, Integer> {
 	public Optional<Process> findByIdAndUser(Integer id, Integer user);
 	
 	@Override
-	@Query(value = "select p from Process p left join fetch p.sights s left join fetch s.user")
+	@Query(value = "select distinct p from Process p left join fetch p.sights s left join fetch s.user")
 	public List<Process> findAll();
 }
