@@ -33,6 +33,7 @@ const tailFormItemLayout = {
 };
 
 const FormUser: React.FC<FormUserType> = ({ handleFinish, initialValues }) => {
+  const [ disableField, setDisableField ] = useState(false);
   const [form] = Form.useForm();
   
   const onFinish = (values: any) => {
@@ -42,6 +43,10 @@ const FormUser: React.FC<FormUserType> = ({ handleFinish, initialValues }) => {
   useEffect(() => {
     if (initialValues && initialValues.authorities.length > 0)
       initialValues.role = initialValues.authorities[0].description
+    
+    if (initialValues) {
+      setDisableField(true);
+    }
 
     form.setFieldsValue(initialValues);
   }, [ initialValues ]);
@@ -127,7 +132,7 @@ const FormUser: React.FC<FormUserType> = ({ handleFinish, initialValues }) => {
         tooltip="Como o usuário deve ser chamado?"
         rules={[{ required: true, message: 'Por favor digite um login!', whitespace: true }]}
       >
-        <Input />
+        <Input disabled={disableField} />
       </Form.Item>
 
       <Form.Item
