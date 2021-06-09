@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Form, Input, Select, Button } from 'antd';
+import { Form, Input, Select, Button, Space } from 'antd';
 import User from '../../../@types/User';
+import { useHistory } from 'react-router';
 
 const { Option } = Select;
 
@@ -33,6 +34,7 @@ const tailFormItemLayout = {
 };
 
 const FormUser: React.FC<FormUserType> = ({ handleFinish, initialValues }) => {
+  const history = useHistory();
   const [ disableField, setDisableField ] = useState(false);
   const [form] = Form.useForm();
   
@@ -148,9 +150,15 @@ const FormUser: React.FC<FormUserType> = ({ handleFinish, initialValues }) => {
       </Form.Item>
      
       <Form.Item {...tailFormItemLayout}>
-        <Button type="primary" htmlType="submit">
-          Salvar usuário
-        </Button>
+        <Space>
+          <Button type="default" htmlType="button" onClick={history.goBack}>
+            Cancelar
+          </Button>
+          <Button type="primary" htmlType="submit">
+            Salvar usuário
+          </Button>
+        </Space>
+        
       </Form.Item>
     </Form>
   );

@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Space } from 'antd';
 import Process from '../../../@types/Process';
+import { useHistory } from 'react-router';
 
 type FormProcessType = {
   handleFinish: (process: Process) => void,
@@ -31,6 +32,7 @@ const tailFormItemLayout = {
 };
 
 const FormUser: React.FC<FormProcessType> = ({ handleFinish, initialValues }) => {
+  const history = useHistory();
   const [form] = Form.useForm();
   
   const onFinish = (values: any) => {
@@ -63,9 +65,14 @@ const FormUser: React.FC<FormProcessType> = ({ handleFinish, initialValues }) =>
       </Form.Item>
      
       <Form.Item {...tailFormItemLayout}>
-        <Button type="primary" htmlType="submit">
-          Salvar processo
-        </Button>
+        <Space>
+          <Button type="default" htmlType="button" onClick={history.goBack}>
+            Cancelar
+          </Button>
+          <Button type="primary" htmlType="submit">
+            Salvar processo
+          </Button>
+        </Space>
       </Form.Item>
     </Form>
   );
