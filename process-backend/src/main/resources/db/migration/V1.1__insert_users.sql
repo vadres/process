@@ -11,5 +11,5 @@ insert into tb_user(vl_description, vl_login, vl_email, vl_password, dt_created_
             values ('Final2', 'final2', 'final2@final2', '12345', now(), now());
 
 insert into tb_user(vl_description, vl_login, vl_email, vl_password, dt_created_at, dt_updated_at) 
-            values ('Final2', 'final2', 'final2@final2', '12345', now(), now());
+            values ('Final3', 'final3', 'final3@final3', '12345', now(), now());
             
