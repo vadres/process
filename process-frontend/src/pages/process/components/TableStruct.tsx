@@ -1,7 +1,8 @@
-import { Button, Space, Tooltip } from "antd";
+import { Button, Space, Tag, Tooltip } from "antd";
 import {
   EditOutlined, SnippetsOutlined
 } from '@ant-design/icons';
+import Sight from "../../../@types/Sight";
 
 interface TableStructProps {
   edit: (record: any) => void,
@@ -21,7 +22,23 @@ const TableStruct = (props: TableStructProps) => {
       key: 'description',
       render: (text:string) => <Button type="link">{text}</Button>,
     },
-    
+    {
+      title: 'Usuários parecer',
+      dataIndex: 'sights',
+      key: 'sights',
+      render: (sights: Sight[]) => (
+        <>
+          {sights.map((sight: Sight) => {
+            let color = 'geekblue';
+            return (
+              <Tag color={color} key={sight.id + sight.user.id}>
+                {sight.user.name.toUpperCase()}
+              </Tag>
+            );
+          })}
+        </>
+      ),
+    },
     {
       title: 'Ações',
       key: 'actions',
@@ -34,7 +51,7 @@ const TableStruct = (props: TableStructProps) => {
           </Tooltip>
 
           <Tooltip title="Adicionar usuário para responser">
-            <Button type="link" onClick={() => props.edit(record)}>
+            <Button type="link" onClick={() => props.addUserSight(record)}>
               <SnippetsOutlined /> 
             </Button>
           </Tooltip>

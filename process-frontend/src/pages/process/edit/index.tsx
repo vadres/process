@@ -17,7 +17,7 @@ interface MatchParams {
 
 const EditProcess: React.FC<RouteComponentProps<MatchParams>> = (props) => {
   const history = useHistory();
-  const [ initialProcess, setInitialProcess ] = useState<Process>({ description: "", id: 0 });
+  const [ initialProcess, setInitialProcess ] = useState<Process>({ description: "", id: 0, sights: [] });
   const { checkUser, user } = useContext(AppContext);
   
   const fetchProcess = useCallback(async () => {

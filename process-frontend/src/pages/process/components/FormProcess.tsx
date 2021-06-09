@@ -42,7 +42,7 @@ const FormUser: React.FC<FormProcessType> = ({ handleFinish, initialValues }) =>
   useEffect(() => {
     form.setFieldsValue(initialValues);
   }, [ initialValues, form ]);
-
+   
   return (
     <Form
       {...formItemLayout}
