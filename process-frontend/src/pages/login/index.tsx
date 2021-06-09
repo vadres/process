@@ -31,11 +31,12 @@ const Login: React.FC = () => {
   }
 
   if (checkUser()) {
+    console.log(user.userDetails.authorities[0].description);
     switch(user.userDetails.authorities[0].description) {
       case 'ADMIN':
         return <Redirect to="/user" />
       case 'TRIADOR':
-        return <Redirect to="/user" />
+        return <Redirect to="/process" />
       case 'FINALIZADOR':
         return <Redirect to="/user" />
       default:

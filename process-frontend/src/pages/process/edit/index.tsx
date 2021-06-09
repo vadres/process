@@ -7,9 +7,9 @@ import { AppContext, appContextDefault } from '../../../context/AppContext';
 import { StyledContent } from '../../../common/StyledContent';
 import { Div, FormContent, Title } from './styles';
 import LayoutAdm from '../../../layouts/LayoutAdm';
-import FormUser from '../components/FormUser';
-import User from '../../../@types/User';
-import { getUser, updateUser } from '../../../services/userService';
+import FormProcess from '../components/FormProcess';
+import Process from '../../../@types/Process';
+import { getProcess, updateProcess } from '../../../services/processService';
 
 interface MatchParams {
   edit: string;
@@ -17,16 +17,16 @@ interface MatchParams {
 
 const { Header, Content, Footer } = Layout;
 
-const EditUser: React.FC<RouteComponentProps<MatchParams>> = (props) => {
+const EditProcess: React.FC<RouteComponentProps<MatchParams>> = (props) => {
   const history = useHistory();
-  const [ initialUser, setInitialUser ] = useState<User>(appContextDefault.user.userDetails);
+  const [ initialProcess, setInitialProcess ] = useState<Process>({ description: "", id: 0 });
   const { checkUser, user } = useContext(AppContext);
   
-  const fetchUser = () => {
+  const fetchProcess = () => {
     (async () => {
       try {
-        const resp = await getUser(user, parseInt(props.match.params.edit));
-        setInitialUser(resp.data);
+        const resp = await getProcess(user, parseInt(props.match.params.edit));
+        setInitialProcess(resp.data);
       } catch (e) {
         console.log(e);
       }
@@ -34,13 +34,13 @@ const EditUser: React.FC<RouteComponentProps<MatchParams>> = (props) => {
   }
   
   useEffect(() => {
-    fetchUser();
+    fetchProcess();
   }, [ ]);
 
-  const handleEditUser = async (userBean: User) => {
+  const handleEditProcess = async (process: Process) => {
     try {
-      await updateUser(user, userBean);
-      history.push("/user");
+      await updateProcess(user, process, parseInt(props.match.params.edit));
+      history.push("/process");
     } catch (e) {}
   }
 
@@ -51,14 +51,14 @@ const EditUser: React.FC<RouteComponentProps<MatchParams>> = (props) => {
           <StyledContent style={{ padding: '0 50px' }}>
             <Breadcrumb style={{ margin: '16px 0' }}>
               <Breadcrumb.Item>Home</Breadcrumb.Item>
-              <Breadcrumb.Item>Usuários</Breadcrumb.Item>
+              <Breadcrumb.Item>Processos</Breadcrumb.Item>
               <Breadcrumb.Item>Edit</Breadcrumb.Item>
             </Breadcrumb>
             <Row>
               <Col lg={{span:12, push: 6}} sm={{span:20, push: 2}} >
                 <Div>
-                  <Title>Editando Usuário</Title>
-                  <FormUser initialValues={initialUser} handleFinish={handleEditUser} />              
+                  <Title>Editando Processo</Title>
+                  <FormProcess initialValues={initialProcess} handleFinish={handleEditProcess} />              
                 </Div>
               </Col>
             </Row>
@@ -70,4 +70,4 @@ const EditUser: React.FC<RouteComponentProps<MatchParams>> = (props) => {
   );
 }
 
-export default EditUser;
+export default EditProcess;

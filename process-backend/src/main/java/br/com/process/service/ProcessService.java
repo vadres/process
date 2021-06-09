@@ -2,10 +2,13 @@ package br.com.process.service;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.process.bean.CreateProcessBean;
+import br.com.process.exception.NotFoundException;
 import br.com.process.model.Process;
 import br.com.process.repository.ProcessRepository;
 
@@ -24,4 +27,20 @@ public class ProcessService {
     public List<Process> list() {
     	return repository.findAll();
     }
+    
+    public Process get(Integer id) {
+    	Process process = repository.findById(id)
+    			                    .orElseThrow(() -> new NotFoundException("Process not found"));
+    			                    
+        return process;
+    }
+
+	public void update(@Valid CreateProcessBean bean) {
+		Process process = repository.findById(bean.getId())
+                .orElseThrow(() -> new NotFoundException("Process not found"));
+		
+		process.setDescription(bean.getDescription());
+		
+		repository.save(process);
+	}
 }

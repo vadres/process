@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,17 +28,20 @@ public class ProcessSightController {
     private ProcessSightService psService;
 	
 	@GetMapping("/finishers")
+	@PreAuthorize("hasAuthority('TRIADOR')")
 	public ResponseEntity<?> searchSights() {
 		return ResponseEntity.ok(userService.listFinishers());
 	}
 	
 	@PostMapping
+	@PreAuthorize("hasAuthority('TRIADOR')")
 	public ResponseEntity<?> createSight(@Valid @RequestBody CreateProcessSightBean bean) {
 		psService.create(bean);
 		return ResponseEntity.ok().build();
 	}
 	
 	@PostMapping("/response")
+	@PreAuthorize("hasAuthority('FINALIZADOR')")
 	public ResponseEntity<?> createResponseSight(@Valid @RequestBody CreateResponseSightBean bean) {
 		psService.createResponse(bean);
 		return ResponseEntity.ok().build();

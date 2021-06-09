@@ -6,6 +6,8 @@ import lombok.Data;
 
 @Data
 public class CreateProcessBean {
+	private Integer id;
+	
 	@NotEmpty
     private String description;
 }

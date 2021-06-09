@@ -5,6 +5,7 @@ import { AppContext, appContextDefault, AppContextType } from "./context/AppCont
 import GlobalStyle from "./common/globalStyles";
 import Routes from "./config/routes";
 import { authenticate } from "./services/authService";
+import { message } from "antd";
 
 const App: React.FC = () => {
   const [ user, setUser ] = useState(appContextDefault.user);
@@ -14,7 +15,12 @@ const App: React.FC = () => {
       const resp = await authenticate(login, password);
       setUser(resp.data);
     } catch (e) {
-      console.log(e);
+      if (e.message.includes("401")) {
+        message.error('Usuário ou senha errados');
+      }
+      if (e.message.includes("400")) {
+        message.error('Requisição contém erros');
+      }
     }
   }, [ user, setUser, authenticate ]);
 
