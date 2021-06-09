@@ -11,14 +11,12 @@ Foi usado a lib swagger para documentar rapidamente a API do backend o caminho p
 
 ### Frontend
 O módulo de frontend foi desenvolvido usando a lib AntDesign, essa lib contém diversos componentes prontos que facilitam o processo de desenvolvimento. A porta da aplicação será a 3000. Existem usuários cadastrados por meio de migrations para realizar login. 
-- login:  admin
-- senha: 12345678
+| Login | Password | Função |
+| ------ | ------ | ------ |    
+| admin | 12345678 | ADMIN |
+| triador | 12345678 | TRIADOR |
+| final1 | 12345678 | FINALIZADOR |
 
-- login:  triador
-- senha: 12345678
-
-- login:  final1
-- senha: 12345678
 
 Rodar os seguintes comandos:
 
