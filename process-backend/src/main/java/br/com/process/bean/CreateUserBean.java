@@ -10,11 +10,11 @@ import lombok.Data;
 @Data
 public class CreateUserBean {
 	@NotBlank
-	@Size(max = 100, min = 4)
+	@Size(max = 100, min = 3)
 	private String username;
 
 	@NotBlank
-	@Size(max = 100, min = 4)
+	@Size(max = 100, min = 3)
 	private String name;
 
 	@NotBlank
@@ -22,7 +22,6 @@ public class CreateUserBean {
 	private String email;
 
 	@NotBlank
-	@Size(min = 8)
 	private String password;
 	
 	@NotBlank
