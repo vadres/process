@@ -1,49 +1,37 @@
-import { Breadcrumb, Table, Space, Button, Modal, Select, Typography, message } from 'antd';
+import { Breadcrumb, Table, Button, Modal, message, Form, Input } from 'antd';
 import { useCallback, useContext, useEffect, useState } from 'react';
-import { Redirect, useHistory } from 'react-router';
-import { PlusOutlined } from '@ant-design/icons';
+import { Redirect } from 'react-router';
 
 import { AppContext } from '../../../context/AppContext';
-import { getAllProcess } from '../../../services/processService';
 
 import { StyledContent } from '../../../common/StyledContent';
 import { Div } from './styles';
 import TableStruct from '../components/TableStruct';
 import LayoutAdm from '../../../layouts/LayoutAdm';
 import Process from '../../../@types/Process';
-import { createSight, getAllFinishers, getProcess } from '../../../services/sightService';
-import User from '../../../@types/User';
+import { createSight, createSightResponse, getAllFinishers, getProcess } from '../../../services/sightService';
 
 function ProcessSightPage() {
-  const history = useHistory();
   const { checkUser, user } = useContext(AppContext);
-    
+  const [form] = Form.useForm();
+
   const [ modalVisible, setModalVisible ] = useState(false);
   const [ processData, setProcessData ] = useState([]);
   const [ idProcess , setIdProcess ] = useState(0);
-  const [ idUser, setIdUser ] = useState(0);
   const [ finishers, setFinishers ] = useState([])
   
-  const handleCreateProcess = () => {
-    history.push("/process/create");
-  }
+  const onFinish = (values: any) => {
+    handleFinish(values);
+  };
 
-  const handleEditProcess = (id: number) => {
-    history.push(`/process/edit/${id}`);
-  }
-
-  const handleUserSightChange = (value: any) => {
-    setIdUser(value);
-  }
-
-  const handleOnModalOk = async () => {
+  const handleFinish = async (values: any) => {
     try {
-      await createSight(user, idUser, idProcess);          
+      await createSightResponse(user, values.description, idProcess);          
       setModalVisible(false);
       fetchProcess();
     } catch (e) {
       if (e.message.includes("400")) {
-        message.error('Usuário já foi adicionado anteriormente');
+        message.error('Dados errados');
       }
     }
   }
@@ -87,8 +75,7 @@ function ProcessSightPage() {
             </Breadcrumb>
             <Div>
               <Table rowKey="id" columns={TableStruct({
-                edit: async (record: Process) => { handleEditProcess(record.id) },
-                addUserSight: async (record: Process) => { 
+                addSight: async (record: Process) => { 
                   await setModalVisible(true);
                   setIdProcess(record.id)
                 }
@@ -97,30 +84,39 @@ function ProcessSightPage() {
           </StyledContent>
 
           <Modal
-            width={300}
-            title="Adicionar Usuário"
+            width={400}
+            title="Responder processo"
             centered
             visible={modalVisible}
-            onOk={handleOnModalOk}
             onCancel={() => setModalVisible(false)}
+            footer={null}
           >
-            <Typography.Text>Finalizador</Typography.Text>
-            <Select
-              showSearch
-              style={{ width: "100%" }}
-              placeholder="Select a person"
-              optionFilterProp="children"
-              onChange={handleUserSightChange}
-              filterOption={(input, option) =>
-                option?.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-              }
+            <Form
+              layout="vertical"
+              form={form}
+              name="register"
+              scrollToFirstError
+              onFinish={onFinish}
             >
-              {
-                finishers.map((f: User) => (
-                  <Select.Option key={f.id} value={f.id}>{f.name}</Select.Option>
-                ))
-              }
-            </Select>
+              <Form.Item
+                name="description"
+                label="Parecer"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Por favor digite um parecer',
+                  },
+                ]}
+              >
+                <Input.TextArea />
+              </Form.Item>
+
+              <Form.Item>
+                  <Button type="primary" htmlType="submit">
+                    Salvar processo
+                  </Button>
+               </Form.Item>
+            </Form>
           </Modal>   
         </LayoutAdm>
       </>

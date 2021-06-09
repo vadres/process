@@ -36,3 +36,19 @@ export const createSight = async (auth: AuthUser, user: number, process: number)
     throw e;
   }
 }
+
+export const createSightResponse = async (auth: AuthUser, description: string, process: number) => {
+  try {
+    return await api.post("/sight/response", {  
+      user: auth.userDetails.id, 
+      process, 
+      description 
+    }, {
+      headers: {
+        'Authorization': `Bearer ${auth.token}`
+      }
+    });
+  } catch (e) {
+    throw e;
+  }
+}

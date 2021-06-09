@@ -6,8 +6,7 @@ import Sight from "../../../@types/Sight";
 import Process from "../../../@types/Process";
 
 interface TableStructProps {
-  edit: (record: any) => void,
-  addUserSight: (record: any) => void
+  addSight: (record: any) => void
 }
 
 const TableStruct = (props: TableStructProps) => {
@@ -47,7 +46,7 @@ const TableStruct = (props: TableStructProps) => {
       render: (text: any, record: Process) => record.sights[0].status === 1 && (
         <Space size="middle">
           <Tooltip title="Adicionar parecer">
-            <Button type="link" onClick={() => props.addUserSight(record)}>
+            <Button type="link" onClick={() => props.addSight(record)}>
               <SnippetsOutlined /> 
             </Button>
           </Tooltip>
