@@ -1,13 +1,13 @@
 import { Space, Tag } from "antd";
 import {
-  CloseOutlined
+  CloseOutlined, EditOutlined
 } from '@ant-design/icons';
 
 import Authority from "../../../@types/Authority";
 
 interface TableStructProps {
   delete: (record: any) => void
-  edit: () => void
+  edit: (record: any) => void
 }
 
 const TableStruct = (props: TableStructProps) => {
@@ -55,6 +55,10 @@ const TableStruct = (props: TableStructProps) => {
         <Space size="middle">
           <a onClick={() => props.delete(record)}>
             <CloseOutlined />
+          </a>
+
+          <a onClick={() => props.edit(record)}>
+            <EditOutlined />
           </a>
         </Space>
       )

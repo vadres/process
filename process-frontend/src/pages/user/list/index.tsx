@@ -10,6 +10,7 @@ import { StyledContent } from '../../../common/StyledContent';
 import { Div } from './styles';
 import TableStruct from '../components/TableStruct';
 import LayoutAdm from '../../../layouts/LayoutAdm';
+import User from '../../../@types/User';
 
 const { Header, Content, Footer } = Layout;
 
@@ -21,6 +22,10 @@ function Users() {
   
   const handleCreateUser = () => {
     history.push("/user/create");
+  }
+
+  const handleEditUser = (id: number) => {
+    history.push(`/user/edit/${id}`);
   }
 
   const fetchUsers = () => {
@@ -57,11 +62,11 @@ function Users() {
               </Space>
 
               <Table rowKey="id" columns={TableStruct({
-                delete: async (record: any) => { 
+                delete: async (record: User) => { 
                   await deleteUser(user, record);
                   await fetchUsers();
                 },
-                edit: () => {}
+                edit: async (record: User) => { handleEditUser(record.id) }
               })} dataSource={usersData} />
             </Div>
           </StyledContent>

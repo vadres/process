@@ -14,6 +14,18 @@ export const getAllUsers = async (auth: AuthUser) => {
   }
 }
 
+export const getUser = async (auth: AuthUser, id: number) => {
+  try {
+    return await api.get(`/user?id=${id}`, {
+      headers: {
+        'Authorization': `Bearer ${auth.token}`
+      }
+    });
+  } catch (e) {
+    throw e;
+  }
+}
+
 export const createUser = async (auth: AuthUser, user: User) => {
   try {
     return await api.post("/user", {...user}, {
@@ -26,6 +38,17 @@ export const createUser = async (auth: AuthUser, user: User) => {
   }
 }
 
+export const updateUser = async (auth: AuthUser, user: User) => {
+  try {
+    return await api.put("/user", {...user}, {
+      headers: {
+        'Authorization': `Bearer ${auth.token}`
+      }
+    });
+  } catch (e) {
+    throw e;
+  }
+}
 
 export const deleteUser = async (auth: AuthUser, user: User) => {
   try {

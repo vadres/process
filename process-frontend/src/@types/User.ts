@@ -6,4 +6,5 @@ export default interface User {
   name: string    
   email: string
   authorities: Authority[]
+  role?: string
 }

@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Form, Input, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
 import User from '../../../@types/User';
 
 const { Option } = Select;
 
 type FormUserType = {
-  handleFinish: (user: User) => void
+  handleFinish: (user: User) => void,
+  initialValues?: User
 }
 
 const formItemLayout = {
@@ -31,12 +32,19 @@ const tailFormItemLayout = {
   },
 };
 
-const FormUser: React.FC<FormUserType> = ({ handleFinish }) => {
+const FormUser: React.FC<FormUserType> = ({ handleFinish, initialValues }) => {
   const [form] = Form.useForm();
-
+  
   const onFinish = (values: any) => {
     handleFinish(values);
   };
+
+  useEffect(() => {
+    if (initialValues && initialValues.authorities.length > 0)
+      initialValues.role = initialValues.authorities[0].description
+
+    form.setFieldsValue(initialValues);
+  }, [ initialValues ]);
 
   return (
     <Form
@@ -44,10 +52,6 @@ const FormUser: React.FC<FormUserType> = ({ handleFinish }) => {
       form={form}
       name="register"
       onFinish={onFinish}
-      initialValues={{
-        residence: ['zhejiang', 'hangzhou', 'xihu'],
-        prefix: '86',
-      }}
       scrollToFirstError
     >
        <Form.Item
@@ -79,7 +83,7 @@ const FormUser: React.FC<FormUserType> = ({ handleFinish }) => {
       >
         <Input />
       </Form.Item>
-
+      
       <Form.Item
         name="password"
         label="Password"
