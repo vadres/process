@@ -38,7 +38,7 @@ const Login: React.FC = () => {
       case 'TRIADOR':
         return <Redirect to="/process" />
       case 'FINALIZADOR':
-        return <Redirect to="/user" />
+        return <Redirect to="/sight" />
       default:
         return <Redirect to="/" />
     }

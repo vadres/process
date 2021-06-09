@@ -6,6 +6,7 @@ import EditProcess from "../pages/process/edit";
 import CreateUser from "../pages/user/create";
 import EditUser from "../pages/user/edit";
 import Users from "../pages/user/list";
+import ProcessSightPage from "../pages/sight/list";
 
 const Routes : React.FC = () => {
   return (
@@ -20,7 +21,9 @@ const Routes : React.FC = () => {
         <Route exact path="/process" component={ProcessPage} />
         <Route exact path="/process/create" component={CreateProcess} />
         <Route exact path="/process/edit/:id" component={EditProcess} />
-        
+
+        <Route exact path="/sight" component={ProcessSightPage} />
+
         <Route path="*">
           <Redirect to="/" />
         </Route>

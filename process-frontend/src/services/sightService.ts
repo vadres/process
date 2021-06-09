@@ -13,6 +13,18 @@ export const getAllFinishers = async (auth: AuthUser) => {
   }
 }
 
+export const getProcess = async (auth: AuthUser) => {
+  try {
+    return await api.get(`/process/sights/open?id=${auth.userDetails.id}`, {
+      headers: {
+        'Authorization': `Bearer ${auth.token}`
+      }
+    });
+  } catch (e) {
+    throw e;
+  }
+}
+
 export const createSight = async (auth: AuthUser, user: number, process: number) => {
   try {
     return await api.post("/sight", { user, process }, {
