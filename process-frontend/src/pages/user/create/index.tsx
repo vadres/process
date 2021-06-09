@@ -1,4 +1,4 @@
-import { Breadcrumb, Row, Col } from 'antd';
+import { Breadcrumb, Row, Col, message } from 'antd';
 import { useContext  } from 'react';
 import { Redirect, useHistory } from 'react-router';
 
@@ -19,7 +19,11 @@ function CreateUser() {
     try {
       await createUser(user, userBean);
       history.push("/user");
-    } catch (e) {}
+    } catch (e) {
+      if (e.message.includes("400")) {
+        message.error('Usuário já existe');
+      }
+    }
   }
 
   return (
