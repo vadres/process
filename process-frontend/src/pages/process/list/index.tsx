@@ -1,10 +1,10 @@
-import { Layout, Menu, Breadcrumb, Table, Tag, Space, Button } from 'antd';
-import { useContext, useEffect, useState } from 'react';
+import { Breadcrumb, Table, Space, Button } from 'antd';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { Redirect, useHistory } from 'react-router';
 import { PlusOutlined } from '@ant-design/icons';
 
 import { AppContext } from '../../../context/AppContext';
-import { getAllProcess, deleteProcess } from '../../../services/processService';
+import { getAllProcess } from '../../../services/processService';
 
 import { StyledContent } from '../../../common/StyledContent';
 import { Div } from './styles';
@@ -26,21 +26,19 @@ function ProcessPage() {
     history.push(`/process/edit/${id}`);
   }
 
-  const fetchProcess = () => {
-    (async () => {
-      try {
+  const fetchProcess = useCallback(async () => {
+    try {
         const resp = await getAllProcess(user);
         if (resp.data.length !== processData.length)
           setProcessData(resp.data);
       } catch (e) {
         console.log(e);
       }
-    })();
-  }
+  }, [ user, processData.length ]);
 
   useEffect(() => {
     fetchProcess();
-  }, [ processData ]);
+  }, [ fetchProcess ]);
 
   return (
     !checkUser()? <Redirect to="/" />: (

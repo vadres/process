@@ -1,17 +1,15 @@
-import { Layout, Menu, Breadcrumb, Row, Col } from 'antd';
-import { useContext, useEffect, useState } from 'react';
+import { Breadcrumb, Row, Col } from 'antd';
+import { useContext  } from 'react';
 import { Redirect, useHistory } from 'react-router';
 
 import { AppContext } from '../../../context/AppContext';
 
 import { StyledContent } from '../../../common/StyledContent';
-import { Div, FormContent, Title } from './styles';
+import { Div, Title } from './styles';
 import LayoutAdm from '../../../layouts/LayoutAdm';
 import FormUser from '../components/FormUser';
 import User from '../../../@types/User';
 import { createUser } from '../../../services/userService';
-
-const { Header, Content, Footer } = Layout;
 
 function CreateUser() {
   const history = useHistory();

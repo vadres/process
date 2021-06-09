@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Form, Input, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
+import { useEffect } from 'react';
+import { Form, Input, Button } from 'antd';
 import Process from '../../../@types/Process';
 
 type FormProcessType = {
@@ -39,7 +39,7 @@ const FormUser: React.FC<FormProcessType> = ({ handleFinish, initialValues }) =>
 
   useEffect(() => {
     form.setFieldsValue(initialValues);
-  }, [ initialValues ]);
+  }, [ initialValues, form ]);
 
   return (
     <Form

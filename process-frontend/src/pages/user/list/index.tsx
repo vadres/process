@@ -1,5 +1,5 @@
-import { Layout, Menu, Breadcrumb, Table, Tag, Space, Button } from 'antd';
-import { useContext, useEffect, useState } from 'react';
+import { Breadcrumb, Table, Space, Button } from 'antd';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { Redirect, useHistory } from 'react-router';
 import { PlusOutlined } from '@ant-design/icons';
 
@@ -11,8 +11,6 @@ import { Div } from './styles';
 import TableStruct from '../components/TableStruct';
 import LayoutAdm from '../../../layouts/LayoutAdm';
 import User from '../../../@types/User';
-
-const { Header, Content, Footer } = Layout;
 
 function Users() {
   const history = useHistory();
@@ -28,21 +26,19 @@ function Users() {
     history.push(`/user/edit/${id}`);
   }
 
-  const fetchUsers = () => {
-    (async () => {
-      try {
-        const resp = await getAllUsers(user);
-        if (resp.data.length !== usersData.length)
-          setUsersData(resp.data);
-      } catch (e) {
-        console.log(e);
-      }
-    })();
-  }
+  const fetchUsers =  useCallback(async() => {
+    try {
+      const resp = await getAllUsers(user);
+      if (resp.data.length !== usersData.length)
+        setUsersData(resp.data);
+    } catch (e) {
+      console.log(e);
+    }
+  }, [ user, usersData.length]);
 
   useEffect(() => {
     fetchUsers();
-  }, [ usersData ]);
+  }, [ usersData, fetchUsers ]);
 
   return (
     !checkUser()? <Redirect to="/" />: (

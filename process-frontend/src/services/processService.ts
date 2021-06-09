@@ -1,6 +1,5 @@
 import AuthUser from "../@types/AuthUser"
 import Process from "../@types/Process";
-import User from "../@types/User";
 import api from "./api"
 
 export const getAllProcess = async (auth: AuthUser) => {

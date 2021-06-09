@@ -1,45 +1,42 @@
-import { Layout, Menu, Breadcrumb, Row, Col } from 'antd';
-import { useContext, useEffect, useState } from 'react';
+import { Breadcrumb, Row, Col } from 'antd';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { Redirect, RouteComponentProps, useHistory } from 'react-router';
 
-import { AppContext, appContextDefault } from '../../../context/AppContext';
+import { AppContext } from '../../../context/AppContext';
 
 import { StyledContent } from '../../../common/StyledContent';
-import { Div, FormContent, Title } from './styles';
+import { Div, Title } from './styles';
 import LayoutAdm from '../../../layouts/LayoutAdm';
 import FormProcess from '../components/FormProcess';
 import Process from '../../../@types/Process';
 import { getProcess, updateProcess } from '../../../services/processService';
 
 interface MatchParams {
-  edit: string;
+  id: string;
 }
-
-const { Header, Content, Footer } = Layout;
 
 const EditProcess: React.FC<RouteComponentProps<MatchParams>> = (props) => {
   const history = useHistory();
   const [ initialProcess, setInitialProcess ] = useState<Process>({ description: "", id: 0 });
   const { checkUser, user } = useContext(AppContext);
   
-  const fetchProcess = () => {
-    (async () => {
+  const fetchProcess = useCallback(async () => {
       try {
-        const resp = await getProcess(user, parseInt(props.match.params.edit));
+        const resp = await getProcess(user, parseInt(props.match.params.id));
         setInitialProcess(resp.data);
       } catch (e) {
         console.log(e);
       }
-    })();
-  }
+    
+  }, [ user, props.match.params.id ]);
   
   useEffect(() => {
     fetchProcess();
-  }, [ ]);
+  }, [ fetchProcess ]);
 
   const handleEditProcess = async (process: Process) => {
     try {
-      await updateProcess(user, process, parseInt(props.match.params.edit));
+      await updateProcess(user, process, parseInt(props.match.params.id));
       history.push("/process");
     } catch (e) {}
   }

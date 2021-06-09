@@ -3,7 +3,7 @@ import { useContext } from 'react';
 
 import { AppContext } from '../context/AppContext';
 
-const { Header, Content, Footer } = Layout;
+const { Header, Footer } = Layout;
 
 const LayoutAdm: React.FC = ({ children }) => {
   const { unsetUser } = useContext(AppContext);

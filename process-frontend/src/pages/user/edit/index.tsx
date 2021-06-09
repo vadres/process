@@ -1,41 +1,38 @@
-import { Layout, Menu, Breadcrumb, Row, Col } from 'antd';
-import { useContext, useEffect, useState } from 'react';
+import { Breadcrumb, Row, Col } from 'antd';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { Redirect, RouteComponentProps, useHistory } from 'react-router';
 
 import { AppContext, appContextDefault } from '../../../context/AppContext';
 
 import { StyledContent } from '../../../common/StyledContent';
-import { Div, FormContent, Title } from './styles';
+import { Div, Title } from './styles';
 import LayoutAdm from '../../../layouts/LayoutAdm';
 import FormUser from '../components/FormUser';
 import User from '../../../@types/User';
 import { getUser, updateUser } from '../../../services/userService';
 
 interface MatchParams {
-  edit: string;
+  id: string;
 }
-
-const { Header, Content, Footer } = Layout;
 
 const EditUser: React.FC<RouteComponentProps<MatchParams>> = (props) => {
   const history = useHistory();
   const [ initialUser, setInitialUser ] = useState<User>(appContextDefault.user.userDetails);
   const { checkUser, user } = useContext(AppContext);
   
-  const fetchUser = () => {
-    (async () => {
+  const fetchUser = useCallback(async () => {
       try {
-        const resp = await getUser(user, parseInt(props.match.params.edit));
+        const resp = await getUser(user, parseInt(props.match.params.id));
         setInitialUser(resp.data);
       } catch (e) {
         console.log(e);
       }
-    })();
-  }
+    
+  }, [ user, props.match.params.id ]);
   
   useEffect(() => {
     fetchUser();
-  }, [ ]);
+  }, [ fetchUser ]);
 
   const handleEditUser = async (userBean: User) => {
     try {

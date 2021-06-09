@@ -1,6 +1,6 @@
-import { Space, Tag } from "antd";
+import { Button, Space } from "antd";
 import {
-  CloseOutlined, EditOutlined
+  EditOutlined
 } from '@ant-design/icons';
 
 interface TableStructProps {
@@ -18,7 +18,7 @@ const TableStruct = (props: TableStructProps) => {
       title: 'Descrição',
       dataIndex: 'description',
       key: 'description',
-      render: (text:string) => <a>{text}</a>,
+      render: (text:string) => <Button type="link">{text}</Button>,
     },
     
     {
@@ -26,9 +26,9 @@ const TableStruct = (props: TableStructProps) => {
       key: 'actions',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <a onClick={() => props.edit(record)}>
+          <Button type="link" onClick={() => props.edit(record)}>
             <EditOutlined />
-          </a>
+          </Button>
         </Space>
       )
     }

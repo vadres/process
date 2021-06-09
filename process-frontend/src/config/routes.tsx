@@ -15,11 +15,11 @@ const Routes : React.FC = () => {
 
         <Route exact path="/user" component={Users} />
         <Route exact path="/user/create" component={CreateUser} />
-        <Route exact path="/user/edit/:edit" component={EditUser} />
+        <Route exact path="/user/edit/:id" component={EditUser} />
 
         <Route exact path="/process" component={ProcessPage} />
         <Route exact path="/process/create" component={CreateProcess} />
-        <Route exact path="/process/edit/:edit" component={EditProcess} />
+        <Route exact path="/process/edit/:id" component={EditProcess} />
         
         <Route path="*">
           <Redirect to="/" />

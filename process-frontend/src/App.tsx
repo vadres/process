@@ -1,5 +1,5 @@
 import "antd/dist/antd.css";
-import React, { Component, useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { AppContext, appContextDefault, AppContextType } from "./context/AppContext";
 
 import GlobalStyle from "./common/globalStyles";
@@ -22,11 +22,11 @@ const App: React.FC = () => {
         message.error('Requisição contém erros');
       }
     }
-  }, [ user, setUser, authenticate ]);
+  }, [ setUser ]);
 
   const unsetUser = useCallback(async() => {
     setUser(appContextDefault.user);
-  }, [ user, setUser ]);
+  }, [ setUser ]);
   
   const value: AppContextType = {
     user,

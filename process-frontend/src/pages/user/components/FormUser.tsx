@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Form, Input, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
+import { Form, Input, Select, Button } from 'antd';
 import User from '../../../@types/User';
 
 const { Option } = Select;
@@ -49,7 +49,7 @@ const FormUser: React.FC<FormUserType> = ({ handleFinish, initialValues }) => {
     }
 
     form.setFieldsValue(initialValues);
-  }, [ initialValues ]);
+  }, [ initialValues, form ]);
 
   return (
     <Form

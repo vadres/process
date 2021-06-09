@@ -1,4 +1,4 @@
-import { Space, Tag } from "antd";
+import { Button, Space, Tag } from "antd";
 import {
   CloseOutlined, EditOutlined
 } from '@ant-design/icons';
@@ -21,7 +21,7 @@ const TableStruct = (props: TableStructProps) => {
       title: 'Nome',
       dataIndex: 'name',
       key: 'name',
-      render: (text:string) => <a>{text}</a>,
+      render: (text:string) => <Button type="link">{text}</Button>,
     },
     {
       title: 'Login',
@@ -53,13 +53,13 @@ const TableStruct = (props: TableStructProps) => {
       key: 'actions',
       render: (text: any, record: any) => (
         <Space size="middle">
-          <a onClick={() => props.delete(record)}>
+          <Button type="link" onClick={() => props.delete(record)}>
             <CloseOutlined />
-          </a>
+          </Button>
 
-          <a onClick={() => props.edit(record)}>
+          <Button type="link" onClick={() => props.edit(record)}>
             <EditOutlined />
-          </a>
+          </Button>
         </Space>
       )
     }
