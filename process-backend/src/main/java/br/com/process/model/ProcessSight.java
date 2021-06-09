@@ -26,7 +26,7 @@ public class ProcessSight {
 	
 	@Column(name = "id_process")
 	private Integer process;
-
+	
 	@ManyToOne
 	@JoinColumn(name = "id_user")
 	private User user;

@@ -28,6 +28,10 @@ public class ProcessService {
     	return repository.findAll();
     }
     
+    public List<Process> listSightsOpen(Integer id) {
+    	return repository.findSightsOpen(id);
+    }
+    
     public Process get(Integer id) {
     	Process process = repository.findById(id)
     			                    .orElseThrow(() -> new NotFoundException("Process not found"));
