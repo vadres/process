@@ -2,9 +2,18 @@
 
 Aplicação de gerenciamento de processos.
 
+## Rodando via docker-compose
+Rode o comando
+```bash
+docker-compose up
+```
 ## Como rodar em desenvolvimento
 ### Backend
 O módulo de backend utiliza o banco de dados H2 e está configurado para ser utilizado na memória, assim a aplicação não necessita de qualquer banco de dados extra, porém os dados não persistirão caso reinicie a aplicação, além disso foram usadas migrations com flyway para criar a estrutura e inserir algumas informações. O context-path sera /process e a porta da aplicação será a 8080.
+#### Depencia extra
+O projeto está utilizando a biblioteca lombok para desenvolvimento, é necessário instala-la para rodar o projeto em desenvolvimento.
+Link da dependência [Project Lombok](https://projectlombok.org/)
+
 #### Documentação da API
 Foi usado a lib swagger para documentar rapidamente a API do backend o caminho para acessa-la é
 - "/swagger-ui.html"
