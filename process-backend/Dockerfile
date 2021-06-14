@@ -1,5 +1,5 @@
 #### Stage 1: Build the application
-FROM openjdk:8-jdk-alpine as build
+FROM 11.0.11-oraclelinux8 as build
 
 WORKDIR /app
 
