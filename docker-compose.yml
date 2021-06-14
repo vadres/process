@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+  # Backend Service 
+  app-server:
+    build:
+      context: process-backend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    restart: always
+    networks: 
+      - backend
+      - frontend
+
+  # Frontend Service 
+  app-client:
+    build:
+      context: process-frontend 
+      dockerfile: Dockerfile
+      args:
+        REACT_APP_API_BASE_URL: http://127.0.0.1:8080/
+    ports:
+      - "3000:80" 
+    restart: always
+    depends_on:
+      - app-server
+    networks:
+      - frontend  
+networks:
+  backend:
+  frontend:    
