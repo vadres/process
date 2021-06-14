@@ -1,5 +1,5 @@
 #### Stage 1: Build the application
-FROM 11.0.11-oraclelinux8 as build
+FROM openjdk:11.0.11-jdk as build
 
 WORKDIR /app
 
@@ -15,7 +15,8 @@ COPY src src
 RUN ./mvnw package -DskipTests
 RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 
-FROM openjdk:8-jre-alpine
+#### Stage 2: run the app 
+FROM openjdk:11.0.11-jre
 
 ARG DEPENDENCY=/app/target/dependency
 
